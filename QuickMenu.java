@@ -27,7 +27,7 @@ public class QuickMenu extends Frame{
         setLayout(null);
 
         initmenu();
-
+        setMbar();
         setVisible(true);
     }
 
@@ -59,6 +59,7 @@ public class QuickMenu extends Frame{
 		listeners[1] = null;								// ---
 		listeners[2] = (ActionEvent e)->{;};		// 
         }
+
     }
 
     public static void main(String args[]){
