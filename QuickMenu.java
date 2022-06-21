@@ -4,12 +4,14 @@ import java.awt.event.*;
 
 
 public class QuickMenu extends Frame{
-    Frame frame = new Frame();
-    Button btn1 = new Button("混雑予測");
-    Button btn2 = new Button("QR読み取り");
-    Button btn3 = new Button("観覧エリアを写真から選択");
-    Button ebtn = new Button("EXIT");
+    Frame frame  = new Frame();
+    Button btn1  = new Button("混雑予測");
+    Button btn2  = new Button("QR読み取り");
+    Button btn3  = new Button("観覧エリアを写真から選択");
+    Button ebtn  = new Button("EXIT");
     MenuBar mbar = new MenuBar();
+    Label label1  = new Label("QUICK MENU"); 
+    Label label2  = new Label("お知らせ");
 
     Menu	regiMenu	= new Menu("登録");
 	Menu	listMenu	= new Menu("リスト");
@@ -48,6 +50,11 @@ public class QuickMenu extends Frame{
         add(ebtn);
         ebtn.setBounds(990,760,100,20);
 
+        add(label1);
+        label1.setBounds(20,50,100,20);
+
+        add(label2);
+        label2.setBounds(140,430,100,20);
     }
 
     public void setMbar(){
@@ -76,6 +83,7 @@ public class QuickMenu extends Frame{
             setMenu(watchMenu,watchMenuItems,listeners);
         }
 
+        setMenuBar(mbar);
     }
 
     void setMenu(Menu menu,String [] items,ActionListener [] listeners){
