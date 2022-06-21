@@ -13,9 +13,9 @@ public class QuickMenu extends Frame{
     Label label1  = new Label("QUICK MENU"); 
     Label label2  = new Label("お知らせ");
 
-    Menu	regiMenu	= new Menu("登録");
-	Menu	listMenu	= new Menu("リスト");
-	Menu	watchMenu	= new Menu("どこで見る？？");
+    Menu	regiMenu	= new Menu("登録する");
+	Menu	listMenu	= new Menu("情報を見る");
+	Menu	watchMenu	= new Menu("どこで観覧する？？");
 
 	String [] regiMenuItems = {"バーコード読み取り","-","コメント登録"};
 	String [] listMenuItems = {"混雑状況","-","コメントリスト"};
@@ -51,7 +51,7 @@ public class QuickMenu extends Frame{
         ebtn.setBounds(990,760,100,20);
 
         add(label1);
-        label1.setBounds(20,50,100,20);
+        label1.setBounds(20,60,100,20);
 
         add(label2);
         label2.setBounds(140,430,100,20);
