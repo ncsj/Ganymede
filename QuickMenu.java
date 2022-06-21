@@ -28,6 +28,7 @@ public class QuickMenu extends Frame{
 
         initmenu();
         setMbar();
+
         setVisible(true);
     }
 
@@ -58,9 +59,34 @@ public class QuickMenu extends Frame{
         listeners[0] = (ActionEvent e)->{;};	// 
 		listeners[1] = null;								// ---
 		listeners[2] = (ActionEvent e)->{;};		// 
+        setMenu(regiMenu,regiMenuItems,listeners);
+        }
+        {
+            ActionListener [] listeners = new ActionListener [listMenuItems.length];
+            listeners[0] = (ActionEvent e)->{;};	// 
+            listeners[1] = null;								// ---
+            listeners[2] = (ActionEvent e)->{;};		// 
+            setMenu(listMenu,listMenuItems,listeners);
+        }
+        {
+            ActionListener [] listeners = new ActionListener [watchMenuItems.length];
+            listeners[0] = (ActionEvent e)->{;};	// 
+            listeners[1] = null;								// ---
+            listeners[2] = (ActionEvent e)->{;};		// 
+            setMenu(watchMenu,watchMenuItems,listeners);
         }
 
     }
+
+    void setMenu(Menu menu,String [] items,ActionListener [] listeners){
+		for(int i=0;i<items.length;i++){
+			MenuItem  menuItem = new MenuItem(items[i]);
+			if(listeners[i] != null){
+				menuItem.addActionListener(listeners[i]);
+			}
+			menu.add(menuItem);
+		}
+	}
 
     public static void main(String args[]){
         new QuickMenu();        
