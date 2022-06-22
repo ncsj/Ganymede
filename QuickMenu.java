@@ -83,7 +83,7 @@ public class QuickMenu extends Frame{
         }
         {
             ActionListener [] listeners = new ActionListener [listMenuItems.length];
-            listeners[0] = (ActionEvent e)->{;};	// 
+            listeners[0] = (ActionEvent e)->{ new MapFrame();};	// 
             listeners[1] = null;								// ---
             listeners[2] = (ActionEvent e)->{;};		// 
             setMenu(listMenu,listMenuItems,listeners);
