@@ -12,7 +12,7 @@ public class CodeDialog extends Dialog implements Closable{
     Button btn2     = new Button("選択");
     Label label     = new Label("ID");    
     ArrayList <Master> masterlist = new ArrayList <Master> ();
-    ArrayList <Master> csvlist    = new ArrayList <Master> ();
+    ArrayList <CSVItem> csvlist    = new ArrayList <CSVItem> ();
 
     boolean flag = false;
     int index;
@@ -58,17 +58,53 @@ public class CodeDialog extends Dialog implements Closable{
         flag = check(id);
         String time = getTime();
         System.out.println(masterlist.get(0).name);
-        Master master = null;
+        CSVItem master = null;
+        for(int i = 0;i<masterlist.size();i++){
+            System.out.println(masterlist.get(i).name);
+        }
         if(flag = true){
             System.out.println("true");
-            master = new Master(masterlist.get(index).name,id,time);
+            master = new CSVItem(masterlist.get(index).name,id,time);
             System.out.println(master.name);  //通らなかた
         }
         //ここで登録状況のCSVを読み込んでListに入れるメソッドloadcsv();を実行
         csvlist.add(master);
         //最後にCSVに書き出す
         //テスト表示↓
-       // System.out.println(csvlist.get(index).name);
+        System.out.println(csvlist.get(csvlist.size()-1).name);
+    }
+
+    public void loadcsv(){
+        String file = "Jam.csv";
+        try{
+            FileInputStream fin   = new FileInputStream(file);
+            InputStreamReader is  = new InputStreamReader(fin);
+            BufferedReader reader = new BufferedReader(is);
+
+            while(true){
+                int i = 0;
+                String gyo = reader.readLine();
+                if(gyo == null){
+                    break;
+                }
+                try{
+                    String [] items = gyo.split(",");
+                    CSVItem jammaster = new CSVItem(items[0],items[1],items[3]);
+                    csvlist.add(jammaster); 
+                    System.out.println(masterlist.get(i).name);
+                }
+                catch(Exception e){
+                    System.out.println(e.toString());
+                }
+                i++;
+            }
+            reader.close();
+            is.close();
+            fin.close();
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
 
     public boolean check(String id){  //idが一致するものがあるかチェックし、一致するもののindexを返す
@@ -77,7 +113,7 @@ public class CodeDialog extends Dialog implements Closable{
         Master master = null;
         for(i=0;i<masterlist.size();i++){
             master = masterlist.get(i);
-            if(id == master.id){
+            if(id.equals(master.id)){
                 flag = true;
                 index = i;
                 System.out.println(index);
@@ -96,6 +132,7 @@ public class CodeDialog extends Dialog implements Closable{
             BufferedReader reader = new BufferedReader(is);
 
             while(true){
+                int i = 0;
                 String gyo = reader.readLine();
                 if(gyo == null){
                     break;
@@ -103,12 +140,13 @@ public class CodeDialog extends Dialog implements Closable{
                 try{
                     String [] items = gyo.split(",");
                     Master coadmaster = new Master(items[0],items[1]);
-                    System.out.println("loadmasterdata");
                     masterlist.add(coadmaster); 
+                    System.out.println(masterlist.get(i).name);
                 }
                 catch(Exception e){
                     System.out.println(e.toString());
                 }
+                i++;
             }
             reader.close();
             is.close();
