@@ -67,7 +67,7 @@ public class CodeDialog extends Dialog implements Closable{
             master = new CSVItem(masterlist.get(index).name,id,time);
             System.out.println(master.name);  //通らなかた
         }
-        //ここで登録状況のCSVを読み込んでListに入れるメソッドloadcsv();を実行
+        loadcsv();
         csvlist.add(master);
         //最後にCSVに書き出す
         //テスト表示↓
@@ -82,7 +82,6 @@ public class CodeDialog extends Dialog implements Closable{
             BufferedReader reader = new BufferedReader(is);
 
             while(true){
-                int i = 0;
                 String gyo = reader.readLine();
                 if(gyo == null){
                     break;
@@ -91,12 +90,10 @@ public class CodeDialog extends Dialog implements Closable{
                     String [] items = gyo.split(",");
                     CSVItem jammaster = new CSVItem(items[0],items[1],items[3]);
                     csvlist.add(jammaster); 
-                    System.out.println(masterlist.get(i).name);
                 }
                 catch(Exception e){
                     System.out.println(e.toString());
                 }
-                i++;
             }
             reader.close();
             is.close();
@@ -105,6 +102,10 @@ public class CodeDialog extends Dialog implements Closable{
         catch(Exception e){
             System.out.println(e.toString());
         }
+    }
+
+    public void printcsv(){
+        ;
     }
 
     public boolean check(String id){  //idが一致するものがあるかチェックし、一致するもののindexを返す
