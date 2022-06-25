@@ -19,6 +19,7 @@ public class PhotoDialog2 extends Dialog implements Closable{
 	MouseAdapter [] mouseListeners = null;
 
 	boolean isReady = false;
+	boolean firstrect = true;
 
 	public static String HOME = null;
 	public static final String Ganymede = "/Ganymede/";
@@ -188,7 +189,10 @@ public class PhotoDialog2 extends Dialog implements Closable{
 
 	public void paint(Graphics g){
 		g.setColor(Color.lightGray);
+		if(firstrect){
 		g.fillRect(20,60,788,745);
+		firstrect = false;
+		}
 
 		if(isReady){
 			if(this.comps != null){

@@ -12,12 +12,17 @@ public class MapWindow extends Window{
 	Label info3  = new Label("no info");
 	ArrayList <Point> ptlist = new ArrayList <Point> ();
 	
-	String desc_file;					// description file name
+	String desc_file;		// description file name
+
+	Image img = null;
+	InputMapFile imf = null;
+	Point point = null;
 
 	public MapWindow(Dialog frame,Double lat,Double lon){
 		super(frame);
 		setLayout(null);
-
+		imf = new InputMapFile();
+		point = imf.getXY(lat,lon,0,0,350,300);
 		
 		info2 = new Label();
 
@@ -68,10 +73,15 @@ public class MapWindow extends Window{
 	}
 
 	public void paint(Graphics g){
-		InputMapFile imf = new InputMapFile();
-		Image img = imf.getMapImage(350,300);
+		if(img == null){
+		//imf = new InputMapFile();
+			img = imf.getMapImage(350,300);
+		}
 		g.drawImage(img,10,80,this);
+		g.setColor(Color.BLUE);
+		g.fillOval(point.x,point.y,16,16);
 		imf.repaint();
+
 	}
 
 }
