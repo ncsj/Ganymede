@@ -11,6 +11,7 @@ public class CodeDialog extends Dialog implements Closable{
     Button btn1     = new Button("登録");
     Button btn2     = new Button("選択");
     Label label     = new Label("ID");    
+    Choice choice = new Choice();
     ArrayList <Master> masterlist = new ArrayList <Master> ();
     ArrayList <CSVItem> csvlist    = new ArrayList <CSVItem> ();
 
@@ -90,6 +91,7 @@ public class CodeDialog extends Dialog implements Closable{
                     String [] items = gyo.split(",");
                     CSVItem jammaster = new CSVItem(items[0],items[1],items[3]);
                     csvlist.add(jammaster); 
+                    choice.add(items[0]);
                 }
                 catch(Exception e){
                     System.out.println(e.toString());
