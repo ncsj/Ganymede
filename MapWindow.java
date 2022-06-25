@@ -17,7 +17,9 @@ public class MapWindow extends Window{
 	public MapWindow(Dialog frame,Double lat,Double lon){
 		super(frame);
 		setLayout(null);
-		InputMapFile ipmap = new InputMapFile();
+
+		
+		info2 = new Label();
 
 
 		//this.desc_file =;
@@ -44,7 +46,7 @@ public class MapWindow extends Window{
 		info3.setBounds(x2,60,w2,20);
 
 		//loadDescription();
-
+		this.setAlwaysOnTop(true);
 	}
 
 	void loadDescription(){
@@ -65,5 +67,11 @@ public class MapWindow extends Window{
 		}
 	}
 
+	public void paint(Graphics g){
+		InputMapFile imf = new InputMapFile();
+		Image img = imf.getMapImage(350,300);
+		g.drawImage(img,10,80,this);
+		imf.repaint();
+	}
 
 }

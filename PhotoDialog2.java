@@ -28,6 +28,8 @@ public class PhotoDialog2 extends Dialog implements Closable{
 		HOME = props.getProperty("user.dir") + "/";
 	}
 
+	MapWindow window = null;
+
 	ArrayList <Integer> xlist = new ArrayList <Integer> ();		// X
 	ArrayList <Integer> ylist = new ArrayList <Integer> ();		// Y
 	ArrayList <Integer> wlist = new ArrayList <Integer> ();		// Width
@@ -82,7 +84,7 @@ public class PhotoDialog2 extends Dialog implements Closable{
 	void setReady(){
 		isReady = true;
 		System.out.println("setReady()");
-		repaint();
+		
 	}
 
 	int image_count = 0;
@@ -171,10 +173,10 @@ public class PhotoDialog2 extends Dialog implements Closable{
 
 
 			PositionChecker checker = new PositionChecker(this,x,y,w,h,photo);
-
-			MapWindow window = new MapWindow(this,lat,lon);
+			window = new MapWindow(this,lat,lon);
 			window.setBounds(820,200,400,480);
 			checker.setWindow(window);
+			
 
 			this.checkers[i] = checker;
 			this.comps[i] = checker;
@@ -195,6 +197,7 @@ public class PhotoDialog2 extends Dialog implements Closable{
 					comp.paint(g);
 				}
 			}
+			//window.repaint();
 		}
 	}
 
