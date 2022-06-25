@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
 import java.io.*;
 
@@ -18,7 +19,13 @@ public class PhotoDialog2 extends Dialog implements Closable{
 
 	boolean isReady = false;
 
-	
+	public static String HOME = null;
+	public static final String Ganymede = "/Ganymede/";
+
+	static{
+		Properties props = System.getProperties();
+		HOME = props.getProperty("user.dir") + "/";
+	}
 
 	ArrayList <Integer> xlist = new ArrayList <Integer> ();		// X
 	ArrayList <Integer> ylist = new ArrayList <Integer> ();		// Y
@@ -30,16 +37,19 @@ public class PhotoDialog2 extends Dialog implements Closable{
 
 	public PhotoDialog2(Frame parent){
         super(parent,"写真から選択",true);
-		setBounds(0,0,1230,800);
+		setBounds(0,0,1230,850);
 		setLayout(null);
 
-		loadRectangles();
+		loadContents();
 		initChecker();
+
 
 		for(MouseAdapter l : mouseListeners){
 			addMouseListener( l );
 			addMouseMotionListener( l );
 		}
+
+		addWindowListener(new Closer(this));
 
 		addWindowListener(new WindowAdapter(){
 			@Override
@@ -62,7 +72,6 @@ public class PhotoDialog2 extends Dialog implements Closable{
 		label1.setBounds(20,40,100,20);
 
 		setVisible(true);
-		repaint();
 	}
 
 	void reset(){
@@ -77,6 +86,7 @@ public class PhotoDialog2 extends Dialog implements Closable{
 
 	void setReady(){
 		isReady = true;
+		System.out.println("setReady()");
 		repaint();
 	}
 
@@ -95,13 +105,14 @@ public class PhotoDialog2 extends Dialog implements Closable{
 		}
 		catch(Exception e){
 		}
+		System.out.println("loadImage()");
 		return image;
 	}
 
-	void loadRectangles(){
+	void loadContents(){
 		try{
-			FileInputStream fin = new FileInputStream("rect.csv");
-			FileInputStream fin2 = new FileInputStream("Photo.csv");
+			FileInputStream fin = new FileInputStream(HOME + "rect.csv");
+			FileInputStream fin2 = new FileInputStream(HOME + "Photos.csv");
 			InputStreamReader is = new InputStreamReader(fin);
 			InputStreamReader is2 = new InputStreamReader(fin2);
 			BufferedReader reader = new BufferedReader(is);
@@ -146,6 +157,7 @@ public class PhotoDialog2 extends Dialog implements Closable{
 		catch(Exception e){
 			System.out.println(e.toString());
 		}
+		System.out.println("loadContents()");
 	}
 
 	void initChecker(){
@@ -158,7 +170,6 @@ public class PhotoDialog2 extends Dialog implements Closable{
 			int y			= ylist.get(i).intValue();
 			int w			= wlist.get(i).intValue();
 			int h			= hlist.get(i).intValue();
-			//Color color		= clist.get(i);
 			String photo	= plist.get(i);
 			Double lat		= latlist.get(i);
 			Double lon      = lonlist.get(i);
@@ -166,8 +177,8 @@ public class PhotoDialog2 extends Dialog implements Closable{
 
 			PositionChecker checker = new PositionChecker(this,x,y,w,h,Color.red,photo);
 
-			DescWindow window = new DescWindow(this,lat,lon);
-			// Window window = new Window(this);
+			//DescWindow window = new DescWindow(this,lat,lon);
+			Window window = new Window(this);
 			window.setBounds(x+30,y+100,400,180);
 			checker.setWindow(window);
 
@@ -175,16 +186,18 @@ public class PhotoDialog2 extends Dialog implements Closable{
 			this.comps[i] = checker;
 			this.mouseListeners[i] = checker;
 		}
+		System.out.println("initChecker()");
 	}
 
 
 	public void paint(Graphics g){
-		//g.setColor(Color.white);  一旦非表示にしてる
-		//g.fillRect(20,60,768,720);
+		g.setColor(Color.lightGray);
+		g.fillRect(20,60,788,800);
 
 		if(isReady){
 			if(this.comps != null){
 				for(PaintComponent comp : this.comps){
+					System.out.println("Paint OK");
 					comp.paint(g);
 				}
 			}
