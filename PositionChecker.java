@@ -118,7 +118,7 @@ class PositionChecker extends MouseAdapter implements PaintComponent{
 			g.drawImage(image,x,y,frame);
 		}
 		else{
-			g.fillRect(x,y,w,h);
+			g.drawRect(x,y,w,h);
 		}
 	}
 }
