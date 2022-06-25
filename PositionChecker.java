@@ -3,8 +3,7 @@ import  java.awt.event.*;
 
 public
 class PositionChecker extends MouseAdapter implements PaintComponent{
-	boolean  state = false;
-	boolean  entered = false;
+	boolean  isSelected = true;
 	IntCheckList  list1 = new IntCheckList();
 	IntCheckList  list2 = new IntCheckList();
 
@@ -21,13 +20,12 @@ class PositionChecker extends MouseAdapter implements PaintComponent{
 	Window  window = null;
 
 	public PositionChecker(PhotoDialog2 frame,
-							int x,int y,int w,int h,Color color,String photo){
+							int x,int y,int w,int h,String photo){
 		this.frame = frame;
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
-		this.color = color;
 		this.photo = photo;
 
 		IntOverCheckItem xcheck1 = new IntOverCheckItem(x);
@@ -69,55 +67,39 @@ class PositionChecker extends MouseAdapter implements PaintComponent{
 		return rtc;
 	}
 
+
 	@Override
 	public void mouseClicked(MouseEvent e){
 		int x = e.getX();
 		int y = e.getY();
 		if(check(x,y)){
-			if(state){
-				state = false;
-			}
-			else{
-				state = true;
-			}
-				
-			frame.repaint();
-		}
-	}
-
-
-	@Override
-	public void mouseMoved(MouseEvent e){
-		int x = e.getX();
-		int y = e.getY();
-		if(check(x,y)){
-			if(entered){
+			if(isSelected){
 			}
 			else{
 				if(window != null){
 					window.setVisible(true);
 				}
-				entered = true;
+				isSelected = true;
 			}
+			frame.repaint();
 		}
 		else{
-			if(entered){
+				isSelected = false;
 				if(window != null){
 					window.setVisible(false);
 				}
-				entered = false;
-			}
+			frame.repaint();
 		}
 	}
 
 	@Override
 	public void paint(Graphics g){
-		g.setColor(color);
-		if(state){
-			g.drawRect(x,y,w,h);
-			g.drawImage(image,x,y,frame);
-		}
-		else{
+		g.setColor(Color.red);
+		g.drawImage(image,x,y,frame);
+		if(isSelected){
+			Graphics2D g2 = (Graphics2D)g;
+			BasicStroke bs = new BasicStroke(2);
+			g2.setStroke(bs);
 			g.drawRect(x,y,w,h);
 		}
 	}

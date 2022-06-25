@@ -9,6 +9,7 @@ import java.io.*;
 public class PhotoDialog2 extends Dialog implements Closable{
     Panel photopanel = new Panel();
     Label label1     = new Label("写真をクリック");
+	Label label2     = new Label("あなたが選択した写真は.....");
     Button btn1      = new Button("EXIT");
     Button btn2      = new Button("混雑状況を見る");
     Image image      = null;
@@ -71,18 +72,12 @@ public class PhotoDialog2 extends Dialog implements Closable{
 		add(label1);
 		label1.setBounds(20,40,100,20);
 
+		add(label2);
+		label2.setBounds(900,130,200,20);
+
 		setVisible(true);
 	}
 
-	void reset(){
-		if(this.checkers != null){
-			for(PositionChecker checker : this.checkers){
-				checker.state = false;
-			}
-
-			repaint();
-		}
-	}
 
 	void setReady(){
 		isReady = true;
@@ -175,11 +170,10 @@ public class PhotoDialog2 extends Dialog implements Closable{
 			Double lon      = lonlist.get(i);
 
 
-			PositionChecker checker = new PositionChecker(this,x,y,w,h,Color.red,photo);
+			PositionChecker checker = new PositionChecker(this,x,y,w,h,photo);
 
-			//DescWindow window = new DescWindow(this,lat,lon);
-			Window window = new Window(this);
-			window.setBounds(x+30,y+100,400,180);
+			MapWindow window = new MapWindow(this,lat,lon);
+			window.setBounds(820,200,400,480);
 			checker.setWindow(window);
 
 			this.checkers[i] = checker;
@@ -192,7 +186,7 @@ public class PhotoDialog2 extends Dialog implements Closable{
 
 	public void paint(Graphics g){
 		g.setColor(Color.lightGray);
-		g.fillRect(20,60,788,800);
+		g.fillRect(20,60,788,745);
 
 		if(isReady){
 			if(this.comps != null){
