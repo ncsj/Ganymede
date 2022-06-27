@@ -21,7 +21,7 @@ public class Huji extends Frame{
         HOME = props.getProperty("user.dir");
     }
 
-	PositionChecker [] checkers     = null;
+	PositionCheckerYamaguchi [] checkers     = null;
 	PaintComponent [] comps         = null;
 	MouseAdapter [] mouseListeners = null;
 
@@ -78,7 +78,7 @@ public class Huji extends Frame{
 	void initChecker(){
         this.mouseListeners = new MouseAdapter [xlist.size()];
 		this.comps          = new PaintComponent [xlist.size()];
-        this.checkers       = new PositionChecker [xlist.size()];
+        this.checkers       = new PositionCheckerYamaguchi [xlist.size()];
 
         for(int i=0;i<xlist.size();i++){
             String str      = slist.get(i);
@@ -87,7 +87,7 @@ public class Huji extends Frame{
             Double iy		= ylist.get(i);
 			Point p = imf.getXY(iy,ix,0,off_set,w,h);
 
-            PositionChecker checker = new PositionChecker(this,p.x,p.y);
+            PositionCheckerYamaguchi checker = new PositionCheckerYamaguchi(this,p.x,p.y);
 
             // DescWindow window = new DescWindow(this,desc);
             Window window = new Window(this);

@@ -52,7 +52,7 @@ public class MainMenu extends Frame implements Closable{
     public void initmenu(){
         add(btn1);
         btn1.setBounds(140,100,250,150);
-		btn1.addActionListener((ActionEvent e)->{ close(); });
+		btn1.addActionListener((ActionEvent e)->{ new Huji(this); });
         
         add(btn2);
         btn2.setBounds(490,100,250,150);
