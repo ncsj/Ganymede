@@ -1,9 +1,15 @@
 import java.awt.*;
 import java.awt.event.*;
 
-
+import java.util.ArrayList;
 
 public class MainMenu extends Frame implements Closable{
+
+	FileIO fio = null;
+    static final String fname = "News.csv";
+
+	ArrayList <String []> slist = new ArrayList <String []> ();
+
     Frame frame  = new Frame();
     Button btn1  = new Button("混雑状況");
     Button btn2  = new Button("QR読み取り");
@@ -32,6 +38,9 @@ public class MainMenu extends Frame implements Closable{
         setBounds(0,0,1230,800);
         setLayout(null);
 
+		fio = new FileIO(fname);
+        slist = fio.getFileDataArrayList();
+
         initmenu();
         setMbar();
 
@@ -43,6 +52,7 @@ public class MainMenu extends Frame implements Closable{
     public void initmenu(){
         add(btn1);
         btn1.setBounds(140,100,250,150);
+		btn1.addActionListener((ActionEvent e)->{ close(); });
         
         add(btn2);
         btn2.setBounds(490,100,250,150);
@@ -52,12 +62,19 @@ public class MainMenu extends Frame implements Closable{
         btn3.setBounds(840,100,250,150);
         btn3.addActionListener((ActionEvent e)->{new PhotoDialog2(this);});
 
+		String [] s;
+        for(int i=0;i<slist.size();i++){
+            s = slist.get(i);
+
+            String ss = s[0] +" , "+ s[1];
+            olist.add(ss);
+        }
         add(olist);
         olist.setBounds(140,450,950,300);
 
         add(btn4);
         btn4.setBounds(140,270,250,150);
-        btn4.addActionListener((ActionEvent e)->{close();});
+        btn4.addActionListener((ActionEvent e)->{new ComentList();});
 
         add(btn5);
         btn5.setBounds(490,270,250,150);
@@ -84,7 +101,7 @@ public class MainMenu extends Frame implements Closable{
         mbar.add(watchMenu);
         {
         ActionListener [] listeners = new ActionListener [regiMenuItems.length];
-        listeners[0] = (ActionEvent e)->{;};	// 
+        listeners[0] = (ActionEvent e)->{new CodeDialog();};	// 
 		listeners[1] = null;								// ---
 		listeners[2] = (ActionEvent e)->{;};		// 
         setMenu(regiMenu,regiMenuItems,listeners);
@@ -93,14 +110,14 @@ public class MainMenu extends Frame implements Closable{
             ActionListener [] listeners = new ActionListener [listMenuItems.length];
             listeners[0] = (ActionEvent e)->{ new MapFrame();};	// 
             listeners[1] = null;								// ---
-            listeners[2] = (ActionEvent e)->{;};		// 
+            listeners[2] = (ActionEvent e)->{new ComentList();};		// 
             setMenu(listMenu,listMenuItems,listeners);
         }
         {
             ActionListener [] listeners = new ActionListener [watchMenuItems.length];
-            listeners[0] = (ActionEvent e)->{;};	// 
+            listeners[0] = (ActionEvent e)->{new PhotoDialog2();};	// 
             listeners[1] = null;								// ---
-            listeners[2] = (ActionEvent e)->{;};		// 
+            listeners[2] = (ActionEvent e)->{new Yousodialog();};		// 
             setMenu(watchMenu,watchMenuItems,listeners);
         }
 
