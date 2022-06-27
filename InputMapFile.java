@@ -39,8 +39,8 @@ public class InputMapFile extends Frame{
 	public Point getXY(Double lat,Double lon,int offset_x,int offset_y,int w,int h){
 		lon = (((lon - minLon) / ( maxLon - minLon)) * w) + offset_x;
         lat = (((lat - maxLat) / (minLat - maxLat)) * h) + offset_y;
-		int y = lon.intValue();
-        int x = lat.intValue();
+		int x = lon.intValue();
+        int y = lat.intValue();
 		Point point = new Point(x,y);
 		return point;
 	}

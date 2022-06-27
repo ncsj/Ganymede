@@ -58,25 +58,25 @@ public class CodeDialog extends Dialog implements Closable{
         String id = field.getText();
         flag = check(id);
         String time = getTime();
-        System.out.println(masterlist.get(0).name);
+        System.out.println(masterlist.get(0).id);
         CSVItem master = null;
         for(int i = 0;i<masterlist.size();i++){
             System.out.println(masterlist.get(i).name);
-        }
-        if(flag = true){
-            System.out.println("true");
-            master = new CSVItem(masterlist.get(index).name,id,time);
-            System.out.println(master.name);  //通らなかた
+            if(flag = true){
+                System.out.println("true");
+                master = new CSVItem(masterlist.get(i).id,masterlist.get(i).time);
+                //System.out.println(master.id);  
+                csvlist.add(master);
         }
         loadcsv();
-        csvlist.add(master);
         //最後にCSVに書き出す
-        //テスト表示↓
-        System.out.println(csvlist.get(csvlist.size()-1).name);
+        writecsv();
+        //System.out.println(csvlist.get(csvlist.size()-1).id);
+        }
     }
 
     public void loadcsv(){
-        String file = "Jam.csv";
+        String file = "konzatsu.csv";
         try{
             FileInputStream fin   = new FileInputStream(file);
             InputStreamReader is  = new InputStreamReader(fin);
@@ -89,7 +89,7 @@ public class CodeDialog extends Dialog implements Closable{
                 }
                 try{
                     String [] items = gyo.split(",");
-                    CSVItem jammaster = new CSVItem(items[0],items[1],items[3]);
+                    CSVItem jammaster = new CSVItem(items[1],items[3]);
                     csvlist.add(jammaster); 
                     choice.add(items[0]);
                 }
@@ -106,8 +106,27 @@ public class CodeDialog extends Dialog implements Closable{
         }
     }
 
-    public void printcsv(){
-        ;
+    public void writecsv(){
+        try{
+            FileOutputStream fout = new FileOutputStream("konzatsu.csv");
+            PrintStream ps = new PrintStream(fout);
+            for(int i=0;i<csvlist.size();i++){
+                for(int n=0;n<csvlist.size();n++){
+                    ps.print(csvlist.get(i).id);
+                    ps.print(",");
+                    ps.print(csvlist.get(i).time);
+                    ps.printf("\n");
+                }
+                }
+                ps.close();
+                fout.close();
+            }
+            catch(FileNotFoundException e){
+                System.out.println(e.toString());
+            }
+            catch(IOException e){
+                System.out.println(e.toString());
+            }
     }
 
     public boolean check(String id){  //idが一致するものがあるかチェックし、一致するもののindexを返す

@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class MainMenu extends Frame implements Closable{
     Frame frame  = new Frame();
-    Button btn1  = new Button("混雑予測");
+    Button btn1  = new Button("混雑状況");
     Button btn2  = new Button("QR読み取り");
     Button btn3  = new Button("観覧エリアを写真から選択");
     Button ebtn  = new Button("EXIT");
@@ -50,7 +50,7 @@ public class MainMenu extends Frame implements Closable{
 
         add(btn3);
         btn3.setBounds(840,100,250,150);
-        btn3.addActionListener((ActionEvent e)->{new PhotoDialog(this);});
+        btn3.addActionListener((ActionEvent e)->{new PhotoDialog2(this);});
 
         add(olist);
         olist.setBounds(140,450,950,300);
@@ -65,7 +65,7 @@ public class MainMenu extends Frame implements Closable{
 
         add(btn6);
         btn6.setBounds(840,270,250,150);
-        btn6.addActionListener((ActionEvent e)->{close();});
+        btn6.addActionListener((ActionEvent e)->{new YousoDialog(this);});
 
         add(ebtn);
         ebtn.setBounds(990,760,100,20);

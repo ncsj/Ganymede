@@ -110,7 +110,7 @@ public class PhotoDialog2 extends Dialog implements Closable{
 	void loadContents(){
 		try{
 			FileInputStream fin = new FileInputStream(HOME + "rect.csv");
-			FileInputStream fin2 = new FileInputStream(HOME + "Photos.csv");
+			FileInputStream fin2 = new FileInputStream(HOME + "photos.csv");
 			InputStreamReader is = new InputStreamReader(fin);
 			InputStreamReader is2 = new InputStreamReader(fin2);
 			BufferedReader reader = new BufferedReader(is);

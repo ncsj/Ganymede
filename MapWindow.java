@@ -22,7 +22,8 @@ public class MapWindow extends Window{
 		super(frame);
 		setLayout(null);
 		imf = new InputMapFile();
-		point = imf.getXY(lat,lon,0,0,350,300);
+		System.out.println("1:" + lat + "," + lon);
+		point = imf.getXY(lat,lon,10,68,350,300);
 		
 		info2 = new Label();
 
