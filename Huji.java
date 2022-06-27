@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class Huji extends Frame{
+public class Huji extends Dialog implements Closable{
+	MainMenu mm = null;
 
 	static ArrayList <Point> plist= new ArrayList <Point> ();
 	InputMapFile imf = null;
@@ -30,7 +31,12 @@ public class Huji extends Frame{
     ArrayList <Double> xlist = new ArrayList <Double> ();
     ArrayList <Double> ylist = new ArrayList <Double> ();
 
-	public Huji(){
+	public Huji(Frame parent){
+		// modeless dialog box
+        super(parent,"コメントの管理",true);
+        if(parent instanceof MainMenu){
+            this.mm = (MainMenu)parent;
+        }
 		InputMapFile imf = new InputMapFile();
 		Image img = imf.getMapImage(w,h);
         this.imap = img;
@@ -47,18 +53,7 @@ public class Huji extends Frame{
             addMouseMotionListener( l );
         }
 
-		addWindowListener(new WindowAdapter(){
-			@Override
-            public void windowOpened(WindowEvent e){
-                //setReady();
-            }
-
-			@Override
-			public void windowClosing(WindowEvent e){
-				close();
-			}
-		});
-
+		addWindowListener(new Closer(this));
 		setVisible(true);
 		repaint();
 	}
@@ -136,12 +131,19 @@ public class Huji extends Frame{
 		}
 	}
 
-	void close(){
+	@Override
+	public void close(){
 		setVisible(false);
 		dispose();
 	}
 
-	public static void main(String args[]){
-		new Huji();
-	}
+	/**
+      Test Code
+    **/
+    public static void main(String args[]){
+        Frame frame = new Frame();
+        frame.setBounds(100,100,100,100);
+        frame.setVisible(true);
+        new Huji(frame);
+    }
 }
