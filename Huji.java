@@ -13,7 +13,8 @@ public class Huji extends Dialog implements Closable{
 	static int off_set = 50;
 	static int h = 600;
 
-	boolean isReady = true;
+	Konzatsu konzatsu = null;
+	boolean isReady = false;
 	public static String HOME = null;
 	Image imap = null;
 
@@ -33,14 +34,16 @@ public class Huji extends Dialog implements Closable{
 
 	public Huji(Frame parent){
 		// modeless dialog box
-        super(parent,"$B%3%a%s%H$N4IM}(B",true);
+        super(parent,"混雑状況",true);
         if(parent instanceof MainMenu){
             this.mm = (MainMenu)parent;
         }
+		Konzatsu konzatsu = new Konzatsu();
 		InputMapFile imf = new InputMapFile();
 		Image img = imf.getMapImage(w,h);
         this.imap = img;
 		this.imf = imf;
+		this.konzatsu = konzatsu;
 		setLayout(null);
 		setBackground(Color.WHITE);
 		setBounds(0,0,w,off_set+h);
@@ -54,6 +57,12 @@ public class Huji extends Dialog implements Closable{
         }
 
 		addWindowListener(new Closer(this));
+		addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowOpened(WindowEvent e){
+                setReady();
+            }
+        });
 		setVisible(true);
 		repaint();
 	}
@@ -62,13 +71,18 @@ public class Huji extends Dialog implements Closable{
 	public void paint(Graphics g){
 		g.drawImage(this.imap,0,off_set,this);
 
-        if(this.comps != null){
-            for(PaintComponent comp : this.comps){
-				System.out.println("OK");
-			    comp.paint(g);
-            }
-        }
+		if(isReady){
+			if(this.comps != null){
+				for(PaintComponent comp : this.comps){
+					comp.paint(g);
+				}
+			}
+		}
 	}
+
+	void setReady(){
+        isReady = true;
+    }
 
 	void initChecker(){
         this.mouseListeners = new MouseAdapter [xlist.size()];
@@ -82,11 +96,10 @@ public class Huji extends Dialog implements Closable{
             Double iy		= ylist.get(i);
 			Point p = imf.getXY(iy,ix,0,off_set,w,h);
 
-            PositionCheckerYamaguchi checker = new PositionCheckerYamaguchi(this,p.x,p.y);
+			PositionCheckerYamaguchi checker = new PositionCheckerYamaguchi(this,p.x,p.y,str,id,konzatsu);
 
             // DescWindow window = new DescWindow(this,desc);
             Window window = new Window(this);
-            window.setBounds(p.x+30,p.y+100,400,180);
             checker.setWindow(window);
 
             this.checkers[i] = checker;
